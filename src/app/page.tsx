@@ -1,103 +1,215 @@
-import Image from "next/image";
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu"
+
+function FormRow() {
+  const [selectedModeles, setSelectedModeles] = useState<string[]>([])
+  const [selectedAnnees, setSelectedAnnees] = useState<string[]>([])
+  const [selectedMoteurs, setSelectedMoteurs] = useState<string[]>([])
+  const [selectedTrans, setSelectedTrans] = useState<string[]>([])
+  const [selectedMotricite, setSelectedMotricite] = useState<string[]>([])
+
+  const toggleValue = (
+    arr: string[],
+    setter: (v: string[]) => void,
+    value: string
+  ) => {
+    if (arr.includes(value)) {
+      setter(arr.filter((item) => item !== value))
+    } else {
+      setter([...arr, value])
+    }
+  }
+
+  return (
+    <div className="flex gap-2 flex-wrap justify-center bg-accent p-6 rounded-lg">
+      {/* 1. Coutant */}
+      <div className="flex flex-col max-w-[100px]">
+        <Label htmlFor="coutant">Coutant</Label>
+        <Input id="coutant" placeholder="Coutant" className="bg-white" />
+      </div>
+
+      {/* 2. Detail */}
+      <div className="flex flex-col max-w-[100px]">
+        <Label htmlFor="detail">Detail</Label>
+        <Input id="detail" placeholder="Detail" className="bg-white" />
+      </div>
+
+      {/* 3. Manuf. */}
+      <div className="flex flex-col max-w-[100px]">
+        <Label htmlFor="manuf">Manuf.</Label>
+        <Input id="manuf" placeholder="Manuf." className="bg-white" />
+      </div>
+
+      {/* 4. Modele */}
+      <div className="flex flex-col">
+        <Label>Modele</Label>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="bg-white justify-between w-[140px]">
+              {selectedModeles.length > 0 ? selectedModeles.join(", ") : "Select Modele"}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[140px]">
+            {["F-150", "F-250", "F-350"].map((m) => (
+              <DropdownMenuCheckboxItem
+                key={m}
+                checked={selectedModeles.includes(m)}
+                onCheckedChange={() => toggleValue(selectedModeles, setSelectedModeles, m)}
+              >
+                {m}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* 5. Annee */}
+      <div className="flex flex-col">
+        <Label>Annee</Label>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="bg-white justify-between w-[140px]">
+              {selectedAnnees.length > 0 ? selectedAnnees.join(", ") : "Select Annee"}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[140px]">
+            {["2002", "2003", "2004"].map((a) => (
+              <DropdownMenuCheckboxItem
+                key={a}
+                checked={selectedAnnees.includes(a)}
+                onCheckedChange={() => toggleValue(selectedAnnees, setSelectedAnnees, a)}
+              >
+                {a}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* 6. Moteur */}
+      <div className="flex flex-col">
+        <Label>Moteur</Label>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="bg-white justify-between w-[140px]">
+              {selectedMoteurs.length > 0 ? selectedMoteurs.join(", ") : "Select Moteur"}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[140px]">
+            {["3.0 Ga", "6.0 Di"].map((m) => (
+              <DropdownMenuCheckboxItem
+                key={m}
+                checked={selectedMoteurs.includes(m)}
+                onCheckedChange={() => toggleValue(selectedMoteurs, setSelectedMoteurs, m)}
+              >
+                {m}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* 7. Trans */}
+      <div className="flex flex-col">
+        <Label>Trans</Label>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="bg-white justify-between w-[140px]">
+              {selectedTrans.length > 0 ? selectedTrans.join(", ") : "Select Trans"}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[140px]">
+            {["6A", "5A", "5M"].map((t) => (
+              <DropdownMenuCheckboxItem
+                key={t}
+                checked={selectedTrans.includes(t)}
+                onCheckedChange={() => toggleValue(selectedTrans, setSelectedTrans, t)}
+              >
+                {t}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* 8. Motricite */}
+      <div className="flex flex-col">
+        <Label>Motricite</Label>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="bg-white justify-between w-[140px]">
+              {selectedMotricite.length > 0 ? selectedMotricite.join(", ") : "Select Motricite"}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[140px]">
+            {["AWD", "4WD", "RWD"].map((m) => (
+              <DropdownMenuCheckboxItem
+                key={m}
+                checked={selectedMotricite.includes(m)}
+                onCheckedChange={() => toggleValue(selectedMotricite, setSelectedMotricite, m)}
+              >
+                {m}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* 9. Interval Ini. */}
+      <div className="flex flex-col max-w-[100px]">
+        <Label htmlFor="interval">Interval Ini.</Label>
+        <Input id="interval" placeholder="Interval Ini." className="bg-white" />
+      </div>
+
+      {/* 10. Recurrence */}
+      <div className="flex flex-col max-w-[100px]">
+        <Label htmlFor="recurrence">Recurrence</Label>
+        <Input id="recurrence" placeholder="Recurrence" className="bg-white" />
+      </div>
+
+      {/* 11. Garantie */}
+      <div className="flex flex-col max-w-[100px]">
+        <Label htmlFor="garantie">Garantie</Label>
+        <Input id="garantie" placeholder="Garantie" className="bg-white" />
+      </div>
+
+      {/* 12. Couverture */}
+      <div className="flex flex-col max-w-[100px]">
+        <Label htmlFor="couverture">Couverture</Label>
+        <Input id="couverture" placeholder="Couverture" className="bg-white" />
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [rows, setRows] = useState<number[]>([0]) // start with one row
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  return (
+    <div className="container mx-auto h-screen py-12 space-y-6">
+      {rows.map((row, idx) => (
+        <FormRow key={idx} />
+      ))}
+
+      <div className="flex justify-center">
+        <Button
+          size={"lg"}
+          className="mt-4 bg-blue-500 hover:bg-blue-400 cursor-pointer"
+          onClick={() => setRows([...rows, rows.length])}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Soumettre
+        </Button>
+      </div>
     </div>
-  );
+  )
 }
